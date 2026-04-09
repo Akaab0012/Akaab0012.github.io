@@ -1,65 +1,1012 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中医药动态追踪 - 中药公司研发进展与业务动态</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c7c44;
+            --secondary-color: #f0f7f2;
+            --accent-color: #d32f2f;
+            --light-color: #ffffff;
+            --dark-color: #333333;
+            --gray-color: #f5f5f5;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: var(--light-color);
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: var(--primary-color);
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:hover, nav a.active {
+            color: var(--primary-color);
+        }
+        
+        nav a.active:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-login:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-subscribe {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-subscribe:hover {
+            background-color: #b71c1c;
+        }
+        
+        /* 搜索栏 */
+        .search-section {
+            background-color: var(--secondary-color);
+            padding: 40px 0;
+            margin-bottom: 30px;
+        }
+        
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .search-container h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        
+        .search-container p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+        
+        .search-box {
+            display: flex;
+            background-color: white;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 18px 25px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-box button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 30px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .search-box button:hover {
+            background-color: #1f5a31;
+        }
+        
+        .search-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .tag {
+            background-color: white;
+            padding: 6px 15px;
+            border-radius: 30px;
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* 今日热点 */
+        .hot-news {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section-title h3 {
+            font-size: 22px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: var(--accent-color);
+        }
+        
+        .view-all {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .hot-news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .hot-news-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .hot-news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hot-news-card.featured {
+            grid-column: span 2;
+            display: flex;
+        }
+        
+        .hot-news-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .hot-news-card.featured .hot-news-img {
+            width: 40%;
+            height: auto;
+        }
+        
+        .hot-news-content {
+            padding: 20px;
+        }
+        
+        .hot-news-card.featured .hot-news-content {
+            width: 60%;
+        }
+        
+        .news-category {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .news-category.research {
+            background-color: #e8f5e9;
+        }
+        
+        .news-category.business {
+            background-color: #f3e5f5;
+        }
+        
+        .news-category.hiring {
+            background-color: #e3f2fd;
+        }
+        
+        .hot-news-content h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .hot-news-content p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 13px;
+        }
+        
+        /* 信息分类展示区 */
+        .info-categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .category-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .category-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .category-header h4 {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-count {
+            background-color: white;
+            color: var(--primary-color);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .category-list {
+            padding: 0;
+        }
+        
+        .category-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: var(--transition);
+        }
+        
+        .category-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .category-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .item-company {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .item-date {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        /* 重点企业追踪 */
+        .company-tracking {
+            margin-bottom: 50px;
+        }
+        
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        
+        .company-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: var(--primary-color);
+            font-size: 24px;
+        }
+        
+        .company-card h5 {
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .company-stats {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h4 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h4:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hot-news-card.featured {
+                grid-column: span 1;
+                flex-direction: column;
+            }
+            
+            .hot-news-card.featured .hot-news-img {
+                width: 100%;
+                height: 200px;
+            }
+            
+            .hot-news-card.featured .hot-news-content {
+                width: 100%;
+            }
+            
+            .info-categories {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .user-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .company-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .search-box {
+                flex-direction: column;
+                border-radius: var(--border-radius);
+            }
+            
+            .search-box input {
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .search-box button {
+                padding: 15px;
+                border-radius: 0 0 var(--border-radius) var(--border-radius);
+            }
+            
+            .hot-news-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <h1>中医药<span>动态追踪</span></h1>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">首页</a></li>
+                    <li><a href="#">研发进展</a></li>
+                    <li><a href="#">业务动态</a></li>
+                    <li><a href="#">人才招聘</a></li>
+                    <li><a href="#">企业档案</a></li>
+                    <li><a href="#">数据分析</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-actions">
+                <button class="btn btn-login">登录/注册</button>
+                <button class="btn btn-subscribe">订阅日报</button>
+            </div>
+        </div>
+    </header>
 
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll site to Pages
+    <!-- 搜索栏 -->
+    <section class="search-section">
+        <div class="container search-container">
+            <h2>追踪中药公司最新动态</h2>
+            <p>每日更新中药企业的药品研发进程、业务进展和人才招聘信息</p>
+            
+            <div class="search-box">
+                <input type="text" placeholder="搜索公司、药品或适应症...">
+                <button><i class="fas fa-search"></i> 搜索</button>
+            </div>
+            
+            <div class="search-tags">
+                <span class="tag">同仁堂</span>
+                <span class="tag">云南白药</span>
+                <span class="tag">片仔癀</span>
+                <span class="tag">康恩贝</span>
+                <span class="tag">临床试验</span>
+                <span class="tag">新药获批</span>
+                <span class="tag">招聘</span>
+            </div>
+        </div>
+    </section>
 
-on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["master"]
+    <main class="container">
+        <!-- 今日热点 -->
+        <section class="hot-news">
+            <div class="section-title">
+                <h3><i class="fas fa-fire"></i> 今日热点</h3>
+                <a href="#" class="view-all">查看全部 <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="hot-news-grid">
+                <div class="hot-news-card featured">
+                    <div class="hot-news-img" style="background-image: url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="hot-news-content">
+                        <span class="news-category research">研发进展</span>
+                        <h4>同仁堂"安宫牛黄丸"新适应症III期临床试验获突破性进展</h4>
+                        <p>北京同仁堂宣布，其经典名方"安宫牛黄丸"针对缺血性脑卒中恢复期的新适应症III期临床试验达到主要终点，预计明年上半年提交上市申请。</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-building"></i> 同仁堂</span>
+                            <span><i class="far fa-clock"></i> 2023-11-05</span>
+                            <span><i class="far fa-eye"></i> 1245次浏览</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hot-news-card">
+                    <div class="hot-news-img" style="background-image: url('https://images.unsplash.com/photo-1585435557343-3b0920315c6c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="hot-news-content">
+                        <span class="news-category business">业务动态</span>
+                        <h4>云南白药拟投资10亿元建设智能化中药生产基地</h4>
+                        <p>云南白药公告，公司计划在昆明经开区投资建设智能化中药生产基地，预计年产中药制剂5000吨，将显著提升公司产能。</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-building"></i> 云南白药</span>
+                            <span><i class="far fa-clock"></i> 2023-11-04</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hot-news-card">
+                    <div class="hot-news-img" style="background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="hot-news-content">
+                        <span class="news-category hiring">人才招聘</span>
+                        <h4>片仔癀公开招聘中药研发总监，年薪最高达150万元</h4>
+                        <p>片仔癀药业发布招聘公告，面向全球招聘中药研发总监，要求博士学历，10年以上中药研发经验，年薪100-150万元。</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-building"></i> 片仔癀</span>
+                            <span><i class="far fa-clock"></i> 2023-11-03</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+        <!-- 信息分类展示区 -->
+        <section class="info-categories">
+            <!-- 研发进展 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <h4><i class="fas fa-flask"></i> 研发进展</h4>
+                    <span class="category-count">24条</span>
+                </div>
+                <div class="category-list">
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>天士力"复方丹参滴丸"FDA III期临床完成入组</span>
+                            <span class="item-date">11-05</span>
+                        </div>
+                        <div class="item-company">天士力医药</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>康缘药业"银杏二萜内酯"新专利获授权</span>
+                            <span class="item-date">11-04</span>
+                        </div>
+                        <div class="item-company">康缘药业</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>以岭药业"连花清瘟"儿童剂型获批临床</span>
+                            <span class="item-date">11-03</span>
+                        </div>
+                        <div class="item-company">以岭药业</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>华润三九"参附注射液"真实世界研究启动</span>
+                            <span class="item-date">11-02</span>
+                        </div>
+                        <div class="item-company">华润三九</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>康恩贝"前列康"改良型新药申报获受理</span>
+                            <span class="item-date">11-01</span>
+                        </div>
+                        <div class="item-company">康恩贝</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 业务动态 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <h4><i class="fas fa-chart-line"></i> 业务动态</h4>
+                    <span class="category-count">18条</span>
+                </div>
+                <div class="category-list">
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>东阿阿胶与日本津村成立合资公司</span>
+                            <span class="item-date">11-05</span>
+                        </div>
+                        <div class="item-company">东阿阿胶</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>白云山"王老吉"进军东南亚市场</span>
+                            <span class="item-date">11-04</span>
+                        </div>
+                        <div class="item-company">白云山</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>九芝堂六味地黄丸进入国家基药目录</span>
+                            <span class="item-date">11-03</span>
+                        </div>
+                        <div class="item-company">九芝堂</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>太极集团藿香正气液提价8%</span>
+                            <span class="item-date">11-02</span>
+                        </div>
+                        <div class="item-company">太极集团</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>中新药业获GMP认证延期</span>
+                            <span class="item-date">11-01</span>
+                        </div>
+                        <div class="item-company">中新药业</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 招聘信息 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <h4><i class="fas fa-users"></i> 人才招聘</h4>
+                    <span class="category-count">32条</span>
+                </div>
+                <div class="category-list">
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>同仁堂招聘中药质量研究员</span>
+                            <span class="item-date">11-05</span>
+                        </div>
+                        <div class="item-company">北京·薪资面议</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>云南白药招聘生产总监</span>
+                            <span class="item-date">11-04</span>
+                        </div>
+                        <div class="item-company">昆明·40-60万/年</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>康恩贝招聘临床监查员</span>
+                            <span class="item-date">11-03</span>
+                        </div>
+                        <div class="item-company">杭州·20-35万/年</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>片仔癀招聘市场策划经理</span>
+                            <span class="item-date">11-02</span>
+                        </div>
+                        <div class="item-company">漳州·25-40万/年</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="item-title">
+                            <span>以岭药业招聘博士后研究员</span>
+                            <span class="item-date">11-01</span>
+                        </div>
+                        <div class="item-company">石家庄·30-50万/年</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+        <!-- 重点企业追踪 -->
+        <section class="company-tracking">
+            <div class="section-title">
+                <h3><i class="fas fa-building"></i> 重点企业追踪</h3>
+                <a href="#" class="view-all">全部企业 <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="company-grid">
+                <div class="company-card">
+                    <div class="company-logo">
+                        <i class="fas fa-plus-square"></i>
+                    </div>
+                    <h5>同仁堂</h5>
+                    <p>北京</p>
+                    <div class="company-stats">
+                        <span>研发动态: 12</span> | 
+                        <span>招聘: 8</span>
+                    </div>
+                </div>
+                
+                <div class="company-card">
+                    <div class="company-logo">
+                        <i class="fas fa-prescription-bottle"></i>
+                    </div>
+                    <h5>云南白药</h5>
+                    <p>昆明</p>
+                    <div class="company-stats">
+                        <span>研发动态: 9</span> | 
+                        <span>招聘: 5</span>
+                    </div>
+                </div>
+                
+                <div class="company-card">
+                    <div class="company-logo">
+                        <i class="fas fa-capsules"></i>
+                    </div>
+                    <h5>片仔癀</h5>
+                    <p>漳州</p>
+                    <div class="company-stats">
+                        <span>研发动态: 7</span> | 
+                        <span>招聘: 6</span>
+                    </div>
+                </div>
+                
+                <div class="company-card">
+                    <div class="company-logo">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h5>康恩贝</h5>
+                    <p>杭州</p>
+                    <div class="company-stats">
+                        <span>研发动态: 11</span> | 
+                        <span>招聘: 7</span>
+                    </div>
+                </div>
+                
+                <div class="company-card">
+                    <div class="company-logo">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h5>以岭药业</h5>
+                    <p>石家庄</p>
+                    <div class="company-stats">
+                        <span>研发动态: 15</span> | 
+                        <span>招聘: 4</span>
+                    </div>
+                </div>
+                
+                <div class="company-card">
+                    <div class="company-logo">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <h5>天士力</h5>
+                    <p>天津</p>
+                    <div class="company-stats">
+                        <span>研发动态: 14</span> | 
+                        <span>招聘: 3</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>关于我们</h4>
+                    <ul>
+                        <li><a href="#">网站介绍</a></li>
+                        <li><a href="#">数据来源</a></li>
+                        <li><a href="#">团队介绍</a></li>
+                        <li><a href="#">联系方式</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>服务</h4>
+                    <ul>
+                        <li><a href="#">企业定制</a></li>
+                        <li><a href="#">数据API</a></li>
+                        <li><a href="#">行业报告</a></li>
+                        <li><a href="#">竞品分析</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>法律声明</h4>
+                    <ul>
+                        <li><a href="#">用户协议</a></li>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">免责声明</a></li>
+                        <li><a href="#">版权声明</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>关注我们</h4>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-weixin"></i> 微信公众号</a></li>
+                        <li><a href="#"><i class="fab fa-weibo"></i> 新浪微博</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> 邮件订阅</a></li>
+                        <li><a href="#"><i class="fas fa-rss"></i> RSS订阅</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 中医药动态追踪平台 版权所有 | 数据仅供参考，不构成投资建议 | 京ICP备12345678号</p>
+                <p>免责声明：本网站信息来源于公开渠道，我们力求但不保证信息的准确性、完整性，使用者应自行核实信息。</p>
+            </div>
+        </div>
+    </footer>
 
-jobs:
-  # Build job
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Ruby
-        # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
-        uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
-        with:
-          ruby-version: '3.1' # Not needed with a .ruby-version file
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-          cache-version: 0 # Increment this number if you need to re-download cached gems
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
-      - name: Build with Jekyll
-        # Outputs to the './_site' directory by default
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
-        env:
-          JEKYLL_ENV: production
-      - name: Upload artifact
-        # Automatically uploads an artifact from the './_site' directory by default
-        uses: actions/upload-pages-artifact@v3
-
-  # Deployment job
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+    <script>
+        // 简单的交互功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 搜索标签点击事件
+            const tags = document.querySelectorAll('.tag');
+            tags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    const searchInput = document.querySelector('.search-box input');
+                    searchInput.value = this.textContent;
+                    searchInput.focus();
+                });
+            });
+            
+            // 公司卡片点击事件
+            const companyCards = document.querySelectorAll('.company-card');
+            companyCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const companyName = this.querySelector('h5').textContent;
+                    alert(`即将跳转到 ${companyName} 的详细页面`);
+                    // 实际应用中这里应该跳转到对应公司的详情页
+                });
+            });
+            
+            // 新闻卡片点击事件
+            const newsCards = document.querySelectorAll('.hot-news-card, .category-item');
+            newsCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // 实际应用中这里应该跳转到新闻详情页
+                    console.log('跳转到新闻详情');
+                });
+            });
+            
+            // 订阅按钮点击事件
+            const subscribeBtn = document.querySelector('.btn-subscribe');
+            subscribeBtn.addEventListener('click', function() {
+                const email = prompt('请输入您的邮箱地址以订阅每日动态：');
+                if (email) {
+                    alert(`感谢订阅！每日动态将发送到：${email}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
